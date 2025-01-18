@@ -1,0 +1,42 @@
+<% layout('/layouts/boilerplate.ejs') -%>
+
+<style>
+ 
+</style>
+
+
+<div class="top-menu mt-3">
+
+  <%- include("../includes/sidebar.ejs") %>
+
+
+
+  <div class="main-menu p-3 ">
+
+    <%- include("../includes/topbar.ejs") %>
+
+    <div>
+        <% for(let post of posts){ %>
+          <a href="/posts/<%=post._id%>" class="post-link">
+        <div class="mb-4">
+          <h5> <%= post.title %> </h5>
+          <p>
+            <%= post.description.split(" ").slice(0, 10).join(" ") %>
+            <% if (post.description.split(" ").length > 10) { %>
+              ...
+            <% } %>
+          </p>
+        </div>
+      </a>
+          <%}%>
+    </div>
+
+</div>
+
+
+
+
+
+
+    
+</div>

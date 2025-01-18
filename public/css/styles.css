@@ -1,0 +1,82 @@
+body {
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+/* .container {
+    flex: 1;
+  } */
+
+/* Navbar */
+  .navbar {
+    height: 5rem;
+    background-color: white
+  }
+
+  .nav-link {
+    color: #222222 !important;
+  }
+  .nav-link:hover{
+    opacity: 0.8;
+    color: #059862 !important;
+  }
+  .navbar-brand{
+    color: #059862 !important;
+  }
+
+  .navmar{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .navbar-brand{
+    margin-left: 30px;
+  }
+
+  .nav-top{
+    margin-right: 80px;
+
+  }
+
+
+
+/* index.ejs */
+.green-btn{
+  background-color: #059862 !important;
+  color:white !important;
+}
+
+.top-menu{
+  display: flex;
+  align-items: flex-start;
+  /* justify-content: space-around; */
+}
+
+.nav-link.active {
+  color: #059862 !important; 
+  background-color: #ffff !important; 
+}
+
+.nav-link i {
+  margin-right: 10px; /* Adjust the value as needed */
+}
+
+
+.post-link {
+  text-decoration: none;
+  color: #222222;
+}
+.post-link:hover {
+  color: #059862;
+}
+
+
+
+/* Post.ejs */
+.btns {
+  display: flex;
+}

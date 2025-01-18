@@ -1,0 +1,16 @@
+//Pending Task's For Project Completion:
+
+
+Add a Review's
+Use Passport Js With Session's
+Use Image Hosting For "User" Picture & Display User Picture With His Post
+Fix Description / Question Section
+Then Move To Hosting
+
+
+
+
+
+ //Done:
+Implement Error Handling  with Joi
+Convert Into MVC                     

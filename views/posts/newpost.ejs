@@ -1,0 +1,48 @@
+<% layout('/layouts/boilerplate.ejs') -%>
+
+<style>
+ 
+</style>
+
+
+<div class="top-menu mt-3">
+
+  <%- include("../includes/sidebar.ejs") %>
+
+
+
+  <div class="main-menu p-3 ">
+
+    <%- include("../includes/topbar.ejs") %>
+
+    <div class="row">
+        
+        <h4>Add A Query</h4>
+        <form action="/posts" method="post">
+
+          <div class="mb-3 mt-3">
+              <input type="text" name="post[title]" placeholder="Query Title" class="form-control" required>
+            </div>
+
+            <div class="mb-3 mt-4">
+              <textarea name="post[description]" placeholder="What's Your Query" rows="5" cols="50" class="form-control" required></textarea>
+            </div>
+
+            <button class="btn green-btn">Submit</button>
+
+
+
+        </form>
+        
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+    
+</div>
