@@ -1,10 +1,8 @@
 import express from 'express'
 import wrapAsync from '../utils/wrapAsync.js'
-import {validateListing} from '../middlewares.js'
+import {validateListing,isLoggedIn } from '../middlewares.js'
 
-import Post from '../models/posts.js'
-
-
+import {data} from "../controllers/posts.js"                                     //Controllers
 
 
 const router = express.Router()
@@ -15,58 +13,24 @@ const router = express.Router()
 //routes -> /posts
 
 router.route('/')
-.get(wrapAsync(async(req,res)=>{
-    const posts = await Post.find().sort({ createdAt: -1 }); 
-    res.render('posts/index.ejs', { posts });
-  
-}))
-.post((validateListing, wrapAsync(async (req,res)=>{  
-    const newpost = new Post(req.body.post)
-    await newpost.save();
-    res.redirect('/')
-    
-  })))
+.get(wrapAsync(data.index))
+.post((isLoggedIn, validateListing, wrapAsync(data.createPost)))
 
 
 router.route('/new')
-.get(((req,res)=>{
-    res.render('posts/newpost.ejs')
-}))
+.get(isLoggedIn , data.newPostForm)
 
 
 router.route('/:id')
-.get((wrapAsync(async (req,res)=>{
-    let {id} = req.params
-    let post = await Post.findById(id)
-    res.render('posts/post.ejs',{post})
-  })))
-.put((validateListing, wrapAsync(async (req,res)=>{
-    let {id} = req.params
-    let update = req.body.post
-  
-    let updatePost = await Post.findByIdAndUpdate(id,{title:update.title,description:update.description})
-    await updatePost.save();
-    res.redirect('/')
-    
-  })))
-.delete((wrapAsync(async (req,res)=>{
-    let {id} = req.params
-    let deletePost = await Post.findByIdAndDelete(id)
-    console.log(deletePost);
-    res.redirect('/')
-    
-  })))
+.get( wrapAsync(data.newPost) )
+.put( isLoggedIn ,validateListing, wrapAsync(data.updatePost) )
+.delete( isLoggedIn, wrapAsync(data.destroyPost) )
 
 
 
 
 router.route('/:id/edit')
-.get((wrapAsync(async(req,res)=>{
-    let {id} = req.params
-    let post = await Post.findById(id)
-    res.render('posts/edit.ejs',{post})
-    
-  })))
+.get( isLoggedIn ,wrapAsync(data.editForm) )
 
 
 

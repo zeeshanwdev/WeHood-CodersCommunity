@@ -4,9 +4,17 @@ import mongoose from "mongoose";
 import ejsMate from 'ejs-mate';
 import methodOverride from "method-override"
 
-import Post from "./models/posts.js"
+import ExpressError from './utils/ExpressError.js'
 
-import postRouter from './routes/post.js'
+import postRouter from './routes/post.js'                                                //Post Router
+import userRouter from './routes/user.js'                                                //User Router
+
+import session from 'express-session'
+import passport from 'passport'
+import LocalStrategy from 'passport-local'
+import User from './models/user.js'
+import flash from 'connect-flash'  
+
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -36,18 +44,58 @@ async function main() {
 }
 
 
-//routes
+//Main route
 app.get('/', (req,res)=>{
   res.redirect('/posts')
 })
 
 
 
-//middlewares
+//-------Middlewares--------
+
+//Sessions
+let sessionOptions={
+  secret: "HelloWorld",
+  resave: false,
+  saveUninitialized: true,
+  cookie:{                                                                                                
+    expires : Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge : 7 * 24 * 60 * 60 * 1000,
+    httpOnly : true,
+  }
+}
+app.use(session(sessionOptions))
+app.use(flash())
+
+
+//PassportJs Middleware                                
+app.use(passport.initialize());
+app.use(passport.session());                                                                            
+passport.use(new LocalStrategy(User.authenticate()))
+
+passport.serializeUser(User.serializeUser());                                                           
+passport.deserializeUser(User.deserializeUser());
+
+
+
+//Flash Middleware  
+app.use((req,res,next)=>{
+  res.locals.success = req.flash("success")                                                              
+  // console.log(res.locals.success)
+  res.locals.error = req.flash("error") 
+  res.locals.currUser = req.user;                                                                       
+  next()
+})
+
+
+
+//Routes Middlewares
 app.use('/posts', postRouter)
+app.use('/', userRouter)
 
 
-//Error's
+
+//Error's Middlewares
 app.all('*',(req,res,next)=>{
   next(new ExpressError(404,"Page Not Found"))
 })
@@ -58,5 +106,7 @@ app.use((err,req,res,next)=>{
 })
 
 
+
+//Listen Port
 app.listen(port,()=>console.log("Server Run's On 3000 Port")
 )

@@ -4,7 +4,7 @@ import {postSchema} from './joiSchema.js'
 import Post from './models/posts.js'
 
 
-//middlewares
+//ExpressError middleware
 export let validateListing = (req, res, next) => {
 
     let { error } = postSchema.validate(req.body);
@@ -16,3 +16,28 @@ export let validateListing = (req, res, next) => {
     }
 
   };
+
+
+
+
+//Passportjs middleware
+
+export let isLoggedIn = (req,res,next)=>{                                                             
+
+    if(!req.isAuthenticated()){             
+      req.session.redirectUrl = req.originalUrl                                                        
+      req.flash("error","You Must Be Login to Create Listing")
+      // console.log("You Must Login First");
+      
+      return res.redirect('/login')
+    }
+    next()
+}
+  
+                                                                      
+export let saveRedirectUrl = (req,res,next)=>{  
+    if(req.session.redirectUrl){                                                                        
+      res.locals.redirectUrl = req.session.redirectUrl
+    }
+    next()
+}
