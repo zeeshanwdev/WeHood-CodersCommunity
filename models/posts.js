@@ -1,4 +1,7 @@
 import mongoose, { mongo } from "mongoose";
+import Comment from './comments.js'
+
+
 let Schema = mongoose.Schema;
 
 
@@ -36,6 +39,14 @@ let postSchema = new Schema({
 
 })
 
+
+//mongoose -> pre/post Middleware   
+postSchema.post("findOneAndDelete", async(post)=>{
+    if(post){
+      await Comment.deleteMany({ _id : {$in :post.comments} })
+      console.log("Also Post Comment's Deleted Is Well");                         
+    }
+  })
 
 
 let Post = mongoose.model("Post", postSchema);

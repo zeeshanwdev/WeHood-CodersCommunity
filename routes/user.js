@@ -4,15 +4,19 @@ import wrapAsync from '../utils/wrapAsync.js'
 import {saveRedirectUrl} from '../middlewares.js'
 import {userdata} from "../controllers/users.js"                                     //Controllers
 
+import multer  from 'multer' 
 
 let router = express.Router()
 
+//Middlewares
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 
 //Signup Route
 router.route('/signup')
 .get( userdata.signupForm )
-.post( wrapAsync(userdata.signup) )
+.post( upload.single('user[image]'), wrapAsync(userdata.signup) )
 
 
 

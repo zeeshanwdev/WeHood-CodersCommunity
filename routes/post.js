@@ -1,6 +1,6 @@
 import express from 'express'
 import wrapAsync from '../utils/wrapAsync.js'
-import {validateListing,isLoggedIn } from '../middlewares.js'
+import {validateListing,isLoggedIn,isOwner } from '../middlewares.js'
 
 import {data} from "../controllers/posts.js"                                     //Controllers
 
@@ -23,14 +23,14 @@ router.route('/new')
 
 router.route('/:id')
 .get( wrapAsync(data.showPost) )
-.put( isLoggedIn ,validateListing, wrapAsync(data.updatePost) )
-.delete( isLoggedIn, wrapAsync(data.destroyPost) )
+.put( isLoggedIn ,isOwner, validateListing, wrapAsync(data.updatePost) )
+.delete( isLoggedIn,isOwner, wrapAsync(data.destroyPost) )
 
 
 
 
 router.route('/:id/edit')
-.get( isLoggedIn ,wrapAsync(data.editForm) )
+.get( isLoggedIn ,isOwner, wrapAsync(data.editForm) )
 
 
 

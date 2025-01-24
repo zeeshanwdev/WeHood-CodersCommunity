@@ -10,6 +10,10 @@ const userSchema = new Schema({
       type: String,
       required: true,
     },
+     image:{
+        url: String,
+        filename: String
+    },
   });
   
   userSchema.plugin(passportLocalMongoose);

@@ -56,6 +56,16 @@ export let saveRedirectUrl = (req,res,next)=>{
 }
 
 
+export let isOwner = async(req,res,next)=>{ 
+  let { id } = req.params;
+  let listing = await Post.findById(id)                                                            
+    if( !listing.owner._id.equals(res.locals.currUser._id)){
+      req.flash("error","You don't have permission to Edit")
+      return res.redirect(`/posts/${id}`)
+    }
+    next()                                                              
+}
+
 
 export let isCommentAuthorized = async(req,res,next)=>{                                                    
   let { id, commentId } = req.params;

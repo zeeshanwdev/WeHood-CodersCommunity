@@ -1,4 +1,5 @@
 import User from '../models/user.js'
+import {uploadToCloudinary} from '../cloudConfig.js'
 
 
 let signupForm = (req,res)=>{
@@ -7,10 +8,19 @@ let signupForm = (req,res)=>{
 
 
 let signup = async(req,res)=>{
-
     try{
+        if (!req.file) {
+            req.flash('error', 'No image file uploaded');
+            return res.redirect('/posts/signup');
+        }
+        const cloudinaryResult = await uploadToCloudinary(req.file.buffer);
+        const { secure_url: url, public_id: filename } = cloudinaryResult;
+
+    
         let {username, email, password} = req.body
         const newUser = new User({email, username})
+        newUser.image = { url, filename };
+
         const registeredUser = await User.register(newUser, password)                                                                                 
         console.log(registeredUser);
     

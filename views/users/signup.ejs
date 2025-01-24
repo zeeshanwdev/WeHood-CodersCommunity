@@ -9,7 +9,7 @@
         
         <h4>Signup Form</h4>
 
-        <form action="/signup" method="post" class="needs-validation" novalidate>
+        <form action="/signup" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
 
           <div class="mb-3 mt-4">
               <label for="username" class="form-label">Username</label>
@@ -29,6 +29,13 @@
               <input type="password" name="password" id="password" placeholder="Enter Your Password" class="form-control" required>
               <div class="invalid-feedback">Please Enter Password</div>
           </div>
+
+          <div class="mb-3 mt-4">
+            <label for="image" class="form-label">Upload Listing Image</label>
+            <input type="file" name="user[image]" placeholder="Home Image URL/Link" class="form-control" required>
+            <div class="valid-feedback">Image Look's Good</div>
+            <div class="invalid-feedback">Please Upload Image</div>
+        </div>
 
           <button class="btn btn-success mb-4 mt-3">Sign Up</button>
 
