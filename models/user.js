@@ -14,6 +14,10 @@ const userSchema = new Schema({
         url: String,
         filename: String
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,                                                       // Automatically sets the current date and time
+    },
   });
   
   userSchema.plugin(passportLocalMongoose);

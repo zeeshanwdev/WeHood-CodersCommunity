@@ -3,7 +3,7 @@ import Post from "../models/posts.js"
 
 
 let index = async(req,res)=>{
-    const posts = await Post.find().sort({ createdAt: -1 }); 
+    const posts = await Post.find().sort({ createdAt: -1 }).populate('owner', 'image');
     res.render('posts/index.ejs', { posts });
   
 }
@@ -24,7 +24,7 @@ let newPostForm = (req,res)=>{
 
 let showPost = async (req,res)=>{
     let {id} = req.params
-    let post = await Post.findById(id).populate({ path: 'comments', populate: { path: 'author' } });
+    let post = await Post.findById(id).populate({ path: 'comments', populate: { path: 'author' } }).populate('owner', 'username image');
     if(!post){
       req.flash("error","Post Does Not Exist") 
       res.redirect('/posts')

@@ -1,42 +1,40 @@
 <% layout('/layouts/boilerplate.ejs') -%>
 
-<style>
- 
-</style>
-
-
 <div class="top-menu mt-3">
-
   <%- include("../includes/sidebar.ejs") %>
-
-
-
   <div class="main-menu p-3 ">
-
     <%- include("../includes/topbar.ejs") %>
 
+
     <div>
-        <% for(let post of posts){ %>
-          <a href="/posts/<%=post._id%>" class="post-link">
-        <div class="mb-4">
-          <h5> <%= post.title %> </h5>
-          <p>
-            <%= post.description.split(" ").slice(0, 10).join(" ") %>
-            <% if (post.description.split(" ").length > 10) { %>
-              ...
+      <% for (let post of posts) { %>
+        <a href="/posts/<%= post._id %>" class="post-link">
+          <div class="post-item d-flex align-items-center mb-4"> <!-- Bootstrap classes -->
+
+            <!-- User Image -->
+            <% if (post.owner && post.owner.image && post.owner.image.url) { %>
+              <img src="<%= post.owner.image.url %>" alt="<%= post.owner.image.filename %>" class="user-image">
+            <% } else { %>
+              <img src="https://res.cloudinary.com/dzhovcqy3/image/upload/v1737752393/wehood_assets/ry0d2nhvytnrj61ph0j9.jpg" alt="Default User Image" class="user-image">
             <% } %>
-          </p>
-        </div>
-      </a>
-          <%}%>
+    
+            <!-- Post Title and Description -->
+            <div class="post-text">
+              <h5 class="post-title"><%= post.title %></h5>
+              <p class="post-description">
+                <%= post.description.split(" ").slice(0, 10).join(" ") %>
+                <% if (post.description.split(" ").length > 10) { %>
+                  ...
+                <% } %>
+              </p>
+            </div>
+          </div>
+        </a>
+      <% } %>
     </div>
+    
+    
+
 
 </div>
-
-
-
-
-
-
-    
 </div>

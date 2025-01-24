@@ -1,5 +1,4 @@
 //Next Update Fix
-Use Image Hosting For "User" Picture & Display User Picture With His Post & Comment's
 Fix Description / Question Section
 Then Move To Hosting
 
@@ -13,4 +12,4 @@ Convert Into MVC
 Use Passport Js With Session's
 Enter Flash Message's
 Add a Review's & Style Review's
-                  
+Use Image Hosting For "User" Picture & Display User Picture With His Post & Comment's

@@ -21,10 +21,7 @@ let postSchema = new Schema({
         type: Date,
         default: Date.now,                                                       // Automatically sets the current date and time
       },
-    // image:{
-    //     url: String,
-    //     filename: String
-    // },
+
     comments:[                                                           
         {
             type:Schema.Types.ObjectId,

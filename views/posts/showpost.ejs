@@ -8,41 +8,54 @@
 
 
 
-
     <div class="row">
-      <div class="col-10">
 
-          <h3 class="card-text mb-3 text-break post-title"><%=post.title%></h3>
-          <p class="card-text text-break"><%=post.description%></p>
-        
-
-          <% if(currUser && currUser._id.equals(post.owner._id)){ %>
-          <div class="d-flex flex-column flex-md-row gap-2 mb-2 mt-5">
-              <!-- Edit Path -->
-              <a href="/posts/<%=post._id%>/edit" class="btn green-btn col-md-2 col-12">Edit</a>
-
-              <!-- Delete Path -->
-              <form class="col-md-2 col-12" action="/posts/<%=post._id%>?_method=DELETE" method="post">
-                  <button class="btn btn-danger w-100">Delete</button>
-              </form>
-          </div>
+      <div class="col-10 mb-4">
+        <div class="post-header d-flex align-items-center mb-4">
+          <!-- User Image -->
+          <% if (post.owner && post.owner.image && post.owner.image.url) { %>
+            <img src="<%= post.owner.image.url %>" alt="User Image" class="user-image">
+          <% } else { %>
+            <img src="https://res.cloudinary.com/dzhovcqy3/image/upload/v1737752393/wehood_assets/ry0d2nhvytnrj61ph0j9.jpg" alt="Default User Image" class="user-image">
           <% } %>
+      
+          <!-- Username & Publish Date-->
+          <div class="ms-3">
+            <h5 class="username mb-0"><%= post.owner.username %></h5>
+            <small class="text-muted">Post on <%= new Date(post.createdAt).toLocaleDateString() %></small>
+          </div>
+
         </div>
-
-
-
-
+      
+        <!-- Post Title -->
+        <h3 class="card-text mb-3 text-break post-title"><%= post.title %></h3>
+      
+        <!-- Post Description -->
+        <p class="card-text text-break"><%= post.description %></p>
+      
+        <% if (currUser && currUser._id.equals(post.owner._id)) { %>
+          <div class="d-flex flex-column flex-md-row gap-2 mb-2 mt-5">
+            <!-- Edit Path -->
+            <a href="/posts/<%= post._id %>/edit" class="btn green-btn col-md-2 col-12">Edit</a>
+      
+            <!-- Delete Path -->
+            <form class="col-md-2 col-12" action="/posts/<%= post._id %>?_method=DELETE" method="post">
+              <button class="btn btn-danger w-100">Delete</button>
+            </form>
+          </div>
+        <% } %>
+      </div>
+      
+     
 
 
     <!-- Review's Form -->
 
     <div class="col-10 mb-3">
     
-
         <%if(currUser){%>                                                                                                           
           <hr>
-
-          <form action="/posts/<%=post._id%>/comments" method="post" novalidate class="needs-validation mb-5">
+          <form action="/posts/<%=post._id%>/comments" method="post" novalidate class="needs-validation mb-4">
 
               <div class="mb-3 mt-3">
                   <label for="comment" class="form-label">Add Your Answer</label>
@@ -53,8 +66,8 @@
               <button class="btn btn-outline-dark">Submit</button>
           </form>
           <%}%>
-
           <hr>
+
 
       <!-- Show Review's -->
       <% if(post.comments.length > 0){ %>
@@ -86,9 +99,6 @@
 
     </div>
   </div>
-
-
-
 
 
 
