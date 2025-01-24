@@ -22,6 +22,17 @@ let postSchema = new Schema({
     //     url: String,
     //     filename: String
     // },
+    comments:[                                                           
+        {
+            type:Schema.Types.ObjectId,
+            ref:'Comment'
+        }
+      ],
+    
+      owner:{                                                                                         
+          type:Schema.Types.ObjectId,
+            ref:'User'                                                                               
+      },
 
 })
 

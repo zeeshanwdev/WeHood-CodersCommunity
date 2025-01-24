@@ -9,10 +9,10 @@ let index = async(req,res)=>{
 
 let createPost = async (req,res)=>{  
     const newpost = new Post(req.body.post)
+    newpost.owner = req.user._id;
     await newpost.save();
     req.flash('success', 'New Post Created');
     res.redirect('/')
-    
   }
 
 
@@ -21,14 +21,14 @@ let newPostForm = (req,res)=>{
 }
 
 
-let newPost = async (req,res)=>{
+let showPost = async (req,res)=>{
     let {id} = req.params
-    let post = await Post.findById(id)
+    let post = await Post.findById(id).populate({ path: 'comments', populate: { path: 'author' } });
     if(!post){
       req.flash("error","Post Does Not Exist") 
       res.redirect('/posts')
     }
-    res.render('posts/post.ejs',{post})
+    res.render('posts/showpost.ejs',{post})
   }
 
 
@@ -82,7 +82,7 @@ let newPost = async (req,res)=>{
     editForm,
     destroyPost,
     updatePost,
-    newPost,
+    showPost,
     newPostForm,
     createPost,
     index

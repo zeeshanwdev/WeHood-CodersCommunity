@@ -1,8 +1,6 @@
 import User from '../models/user.js'
 
 
-
-
 let signupForm = (req,res)=>{
     res.render('users/signup.ejs')
 }

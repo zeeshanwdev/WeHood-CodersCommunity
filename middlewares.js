@@ -1,7 +1,8 @@
 import ExpressError from './utils/ExpressError.js'
-import {postSchema} from './joiSchema.js'
+import {postSchema,commentSchema} from './joiSchema.js'
 
 import Post from './models/posts.js'
+import Comment from './models/comments.js'
 
 
 //ExpressError middleware
@@ -17,6 +18,18 @@ export let validateListing = (req, res, next) => {
 
   };
 
+
+export let validateComment = (req,res,next)=>{
+
+    let {error}= commentSchema.validate(req.body)
+    if(error){
+      let errMsg=error.details.map((el)=>el.message).join(',')
+      throw new ExpressError(400, errMsg)
+    }else{
+      next()
+    }
+    
+}
 
 
 
@@ -40,4 +53,16 @@ export let saveRedirectUrl = (req,res,next)=>{
       res.locals.redirectUrl = req.session.redirectUrl
     }
     next()
+}
+
+
+
+export let isCommentAuthorized = async(req,res,next)=>{                                                    
+  let { id, commentId } = req.params;
+  let review = await Comment.findById(commentId)                                                           
+    if( !review.author.equals(res.locals.currUser._id)){
+      req.flash("error","You are not the Author of this Review")
+      return res.redirect(`/posts/${id}`)
+    }
+    next()                                                              
 }

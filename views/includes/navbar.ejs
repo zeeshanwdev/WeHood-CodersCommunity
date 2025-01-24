@@ -37,8 +37,15 @@
         <!-- Authentication -->
         <div class="navbar-nav ms-auto navmar">
           <i class="fa-solid fa-sun"></i>
+          
+          <%if(!currUser){ %>
           <a class="nav-link" href="/signup">Signup</a>
           <a class="nav-link" href="/login">Login</a>
+          <%}%>
+
+         <% if(currUser){ %>
+            <a class="nav-link" href="/logout">Logout</a>
+            <%}%>
         </div>
 
 

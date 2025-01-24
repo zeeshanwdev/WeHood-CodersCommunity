@@ -7,3 +7,12 @@ export const postSchema= Joi.object({
         description: Joi.string().required(),
     }).required()                                                                                       
 })
+
+
+
+export const commentSchema = Joi.object({
+    comments: Joi.object({
+      comment: Joi.string().required(),
+    }).required(),
+  });
+  

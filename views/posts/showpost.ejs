@@ -1,0 +1,96 @@
+<% layout('/layouts/boilerplate.ejs') -%>
+
+<div class="top-menu mt-3">
+  <%- include("../includes/sidebar.ejs") %>
+
+  <div class="main-menu p-3">
+    <%- include("../includes/topbar.ejs") %>
+
+
+
+
+    <div class="row">
+      <div class="col-10">
+
+          <h3 class="card-text mb-3 text-break post-title"><%=post.title%></h3>
+          <p class="card-text text-break"><%=post.description%></p>
+        
+
+          <% if(currUser && currUser._id.equals(post.owner._id)){ %>
+          <div class="d-flex flex-column flex-md-row gap-2 mb-2 mt-5">
+              <!-- Edit Path -->
+              <a href="/posts/<%=post._id%>/edit" class="btn green-btn col-md-2 col-12">Edit</a>
+
+              <!-- Delete Path -->
+              <form class="col-md-2 col-12" action="/posts/<%=post._id%>?_method=DELETE" method="post">
+                  <button class="btn btn-danger w-100">Delete</button>
+              </form>
+          </div>
+          <% } %>
+        </div>
+
+
+
+
+
+
+    <!-- Review's Form -->
+
+    <div class="col-10 mb-3">
+    
+
+        <%if(currUser){%>                                                                                                           
+          <hr>
+
+          <form action="/posts/<%=post._id%>/comments" method="post" novalidate class="needs-validation mb-5">
+
+              <div class="mb-3 mt-3">
+                  <label for="comment" class="form-label">Add Your Answer</label>
+                  <textarea class="form-control" name="comments[comment]" id="comment" cols="30" rows="5" required></textarea>
+                  <div class="invalid-feedback">Please Add Some Comment</div>
+              </div>
+          
+              <button class="btn btn-outline-dark">Submit</button>
+          </form>
+          <%}%>
+
+          <hr>
+
+      <!-- Show Review's -->
+      <% if(post.comments.length > 0){ %>
+    
+        <div class="row mt-4">
+            <h5 class="mb-4">All Answer's</h5>
+            
+            <% for(let comments of post.comments){ %>
+                
+                <!-- bootstrap 5 Card -->
+              <div class="card w-100 mb-3"> 
+                    <div class="card-body py-3 px-0">
+                        <h5 class="card-title mt-2">@<%=comments.author.username%></h5>
+                        <p class="card-text"><%=comments.comment%></p>
+                    </div>
+
+                    <!-- Delete Review -->
+                    <%if(currUser && currUser._id.equals(comments.author._id )){%>                                                              <!-- Authorization Review Author -->
+                      <form class="mb-3 mt-2" action="/posts/<%=post._id%>/comments/<%=comments._id%>?_method=DELETE" method="post">         <!-- using MethodOveride -->
+                         <button class="btn btn-sm btn-danger">Delete</button>
+                      </form>
+                      <%}%>
+                  
+              </div>
+            <%}%>
+            
+        </div>
+        <% } %>
+
+    </div>
+  </div>
+
+
+
+
+
+
+  </div>
+</div>

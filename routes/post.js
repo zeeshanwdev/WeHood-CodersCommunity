@@ -22,7 +22,7 @@ router.route('/new')
 
 
 router.route('/:id')
-.get( wrapAsync(data.newPost) )
+.get( wrapAsync(data.showPost) )
 .put( isLoggedIn ,validateListing, wrapAsync(data.updatePost) )
 .delete( isLoggedIn, wrapAsync(data.destroyPost) )
 

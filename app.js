@@ -8,6 +8,7 @@ import ExpressError from './utils/ExpressError.js'
 
 import postRouter from './routes/post.js'                                                //Post Router
 import userRouter from './routes/user.js'                                                //User Router
+import commentRouter from './routes/comment.js'                                          //Comment Router
 
 import session from 'express-session'
 import passport from 'passport'
@@ -91,20 +92,19 @@ app.use((req,res,next)=>{
 
 //Routes Middlewares
 app.use('/posts', postRouter)
+app.use('/posts/:id/comments', commentRouter)
 app.use('/', userRouter)
 
 
-
-//Error's Middlewares
+//Error's
 app.all('*',(req,res,next)=>{
   next(new ExpressError(404,"Page Not Found"))
 })
 
 app.use((err,req,res,next)=>{
   let {statusCode=500,message="Something went wrong!"}=err
-  res.status(statusCode).render('./listings/error',{message})
+  res.status(statusCode).render('./posts/error',{message})
 })
-
 
 
 //Listen Port
