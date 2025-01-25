@@ -136,8 +136,15 @@ body {
 }
 
 .username {
-  font-size: 1.25rem; /* 20px */
+  font-size: 1.25rem; 
   font-weight: bold;
-  color: #343a40; /* Bootstrap dark */
+  color: #343a40; 
   margin: 0;
+}
+
+
+.custom-card {
+  background-color: #F9F9F8 !important; 
+  color: #333333 !important;
+  border: 1px solid black !important;
 }
