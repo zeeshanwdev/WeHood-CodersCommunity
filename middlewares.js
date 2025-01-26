@@ -32,7 +32,6 @@ export let validateComment = (req,res,next)=>{
 }
 
 
-
 //Passportjs middleware
 
 export let isLoggedIn = (req,res,next)=>{                                                             

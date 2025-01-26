@@ -14,11 +14,9 @@
         <div class="post-header d-flex align-items-center mb-4">
           <!-- User Image -->
           <% if (post.owner && post.owner.image && post.owner.image.url) { %>
-            <img src="<%= post.owner.image.url %>" alt="User Image" class="user-image">
-          <% } else { %>
-            <img src="https://res.cloudinary.com/dzhovcqy3/image/upload/v1737752393/wehood_assets/ry0d2nhvytnrj61ph0j9.jpg" alt="Default User Image" class="user-image">
-          <% } %>
-      
+            <img src="<%= post.owner.image.url %>" alt="<%= post.owner.image.filename %>" class="user-image">
+          <% }%>
+
           <!-- Username & Publish Date-->
           <div class="ms-3">
             <h5 class="username mb-0"><%= post.owner.username %></h5>
@@ -85,10 +83,8 @@
 
                       <!-- User Image -->
                        <% if (comments.author.image && comments.author.image.url) { %>
-                        <img src="<%= comments.author.image.url %>" alt="User Image" class="user-image me-3">
-                        <% } else { %>
-                          <img src="https://res.cloudinary.com/dzhovcqy3/image/upload/v1737752393/wehood_assets/ry0d2nhvytnrj61ph0j9.jpg" alt="Default User Image" class="user-image me-3">
-                          <% } %>
+                        <img src="<%= comments.author.image.url %>" alt="<%= comments.author.image.filename %>" class="user-image me-3">
+                        <% }%>
                           
                       <!-- Username -->
                        <h5 class="card-title mt-2 mb-0">@<%= comments.author.username %></h5>

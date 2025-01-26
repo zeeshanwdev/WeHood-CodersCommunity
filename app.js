@@ -13,10 +13,13 @@ import userRouter from './routes/user.js'                                       
 import commentRouter from './routes/comment.js'                                          //Comment Router
 
 import session from 'express-session'
+import MongoStore from 'connect-mongo'
+import flash from 'connect-flash'
+
 import passport from 'passport'
 import LocalStrategy from 'passport-local'
 import User from './models/user.js'
-import flash from 'connect-flash'  
+  
 
 
 import path from "path";
@@ -25,8 +28,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 
+// let mongo_url = "mongodb://127.0.0.1:27017/wehood"
+let mongo_url = process.env.MONGODBATLAS_URL
 
-let mongo_url = "mongodb://127.0.0.1:27017/wehood"
 let port = 3000
 let app = express()
 
@@ -56,9 +60,21 @@ app.get('/', (req,res)=>{
 
 //-------Middlewares--------
 
+//Store Session Object                                                                                  
+const store = MongoStore.create({
+  mongoUrl: mongo_url,
+  crypto: {                                                                                            
+    secret: process.env.SESSION_SECRET
+  },
+  touchAfter: 24 * 3600,                                                                               
+})
+store.on("error", ()=>console.log("Error Accured In Mongo Session Storing",err)) 
+
+
 //Sessions
 let sessionOptions={
-  secret: "HelloWorld",
+  store: store,
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie:{                                                                                                

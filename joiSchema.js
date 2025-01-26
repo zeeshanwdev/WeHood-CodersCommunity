@@ -16,3 +16,12 @@ export const commentSchema = Joi.object({
     }).required(),
   });
   
+
+//   export const userSchema= Joi.object({
+//     user:Joi.object({
+//         username: Joi.string().required(),
+//         email: Joi.string().required(),
+//         password: Joi.string().required(),
+//         image: Joi.object({ url: Joi.string().allow("", null), }).default({ url: "" }),
+//     }).required()                                                                                       
+// })
